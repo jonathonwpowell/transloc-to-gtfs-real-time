@@ -4,12 +4,9 @@ var express = require("express");
 const serverless = require('serverless-http');
 var app = express();
 
+const router = express.Router();
 
-// app.listen(3000, () => {
-//     console.log("Server running on port 3000");
-//    });
-
-app.get("/bus.pb", (req,res,next) => {
+router.get("/bus.pb", (req,res,next) => {
 
     var busCall = unirest("GET", "https://transloc-api-1-2.p.rapidapi.com/vehicles.json");
 
@@ -68,6 +65,7 @@ app.get("/bus.pb", (req,res,next) => {
         console.log("Sent data.");
     });
 });
+app.use("/.netlify/functions",router);
 
 module.exports.handler = serverless(app);
 
