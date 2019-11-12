@@ -1,12 +1,13 @@
 var unirest = require("unirest");
 var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
 var express = require("express");
+const serverless = require('serverless-http');
 var app = express();
 
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
-   });
+// app.listen(3000, () => {
+//     console.log("Server running on port 3000");
+//    });
 
 app.get("/bus.pb", (req,res,next) => {
 
@@ -66,7 +67,7 @@ app.get("/bus.pb", (req,res,next) => {
         res.send(encodedMessage);
         console.log("Sent data.");
     });
-
-
 });
+
+module.exports.handler = serverless(app);
 
