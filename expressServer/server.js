@@ -57,12 +57,12 @@ router.get("/bus.pb", (req,res,next) => {
         });
 
         var encodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.encode(feedMessage).finish();
-        var decodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(encodedMessage);
+        //var decodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(encodedMessage);
         // console.log(feedMessage.entity[0]);
         // console.log("----------------------------------------")
         //console.log(decodedMessage.entity);
         res.end(encodedMessage);
-        console.log("Sent data.");
+        console.log("Sent data. Content Length " + encodedMessage.length);
     });
 });
 app.use("/.netlify/functions/server",router);
