@@ -1,0 +1,72 @@
+var unirest = require("unirest");
+var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
+var express = require("express");
+var app = express();
+
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+   });
+
+app.get("/bus.pb", (req,res,next) => {
+
+    var busCall = unirest("GET", "https://transloc-api-1-2.p.rapidapi.com/vehicles.json");
+
+    busCall.query({
+        "callback": "call",
+        "agencies": "16"
+    });
+
+    busCall.headers({
+        "x-rapidapi-host": "transloc-api-1-2.p.rapidapi.com",
+        "x-rapidapi-key": "IcmLKZZ5zEmshFRGhk5AZLEqKIN8p1EhU12jsnox1jlqBKWleK"
+    });
+
+
+    busCall.end(function (busRes) {
+        if (busRes.error) throw new Error(busRes.error);
+        var feedMessage = new GtfsRealtimeBindings.transit_realtime.FeedMessage();
+        feedMessage.header = new GtfsRealtimeBindings.transit_realtime.FeedHeader({
+            "gtfs_realtime_version": "2.0",
+            "incrementality": 0,
+            "timestamp": new Date(busRes.body.generated_on).getTime() / 1000
+        });
+
+        var buses = busRes.body["data"]["16"];
+        buses.forEach((bus) => {
+            var position = new GtfsRealtimeBindings.transit_realtime.Position({
+                "latitude": bus.location.lat,
+                "longitude": bus.location.lng
+            })
+
+
+            var vehicleDesc = new GtfsRealtimeBindings.transit_realtime.VehicleDescriptor({
+                "id": bus.vehicle_id,
+            });
+
+            var vehiclePos = new GtfsRealtimeBindings.transit_realtime.VehiclePosition({
+                position,
+                "timestamp": new Date(bus.last_updated_on).getTime() / 1000,
+                vehicle: vehicleDesc,
+            })
+
+
+            var feedEntity = new GtfsRealtimeBindings.transit_realtime.FeedEntity({"vehicle": vehiclePos, "id": bus.vehicle_id});
+            feedMessage.entity.push(feedEntity);
+            // console.log("Is Vehicle pos valid: " + GtfsRealtimeBindings.transit_realtime.VehiclePosition.verify(vehiclePos));
+            // console.log("Is pos valid: " + GtfsRealtimeBindings.transit_realtime.Position.verify(position));
+            // console.log("Is feedEntity valid: " + GtfsRealtimeBindings.transit_realtime.FeedEntity.verify(feedEntity));
+        });
+
+        var encodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.encode(feedMessage).finish();
+        var decodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(encodedMessage);
+        // console.log(feedMessage.entity[0]);
+        // console.log("----------------------------------------")
+        //console.log(decodedMessage.entity);
+        res.send(encodedMessage);
+        console.log("Sent data.");
+    });
+
+
+});
+

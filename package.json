@@ -1,0 +1,13 @@
+{
+  "name": "transloc-to-gtfs-real-time",
+  "version": "1.0.0",
+  "description": "tool to convert transloc json to gtfs real time",
+  "main": "index.js",
+  "author": "Jonathon Powell",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "gtfs-realtime-bindings": "^0.0.5",
+    "unirest": "^0.6.0"
+  }
+}
