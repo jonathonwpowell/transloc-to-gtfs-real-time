@@ -6,7 +6,7 @@
   "author": "Jonathon Powell",
   "license": "MIT",
   "scripts": {
-    "build": "netlify-lambda build express"
+    "build": "netlify-lambda build ."
   },
   "dependencies": {
     "express": "^4.17.1",
