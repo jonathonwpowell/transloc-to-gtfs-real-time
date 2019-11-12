@@ -61,9 +61,9 @@ router.get("/bus.pb", (req,res,next) => {
         // console.log(feedMessage.entity[0]);
         // console.log("----------------------------------------")
         //console.log(decodedMessage.entity);
-        res.header("Content-Length",encodedMessage.length.toString());
-        res.end(encodedMessage);
-        console.log("Sent data. Content Length " + encodedMessage.length);
+        res.write(encodedMessage);
+        res.end();
+        //console.log("Sent data. Content Length " + encodedMessage.length);
     });
 });
 app.use("/.netlify/functions/server",router);
