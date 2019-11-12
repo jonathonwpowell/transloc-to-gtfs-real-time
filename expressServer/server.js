@@ -61,11 +61,12 @@ router.get("/bus.pb", (req,res,next) => {
         // console.log(feedMessage.entity[0]);
         // console.log("----------------------------------------")
         //console.log(decodedMessage.entity);
-        res.send(encodedMessage);
+        res.end(encodedMessage);
         console.log("Sent data.");
     });
 });
 app.use("/.netlify/functions/server",router);
 
+module.exports = app;
 module.exports.handler = serverless(app);
 
