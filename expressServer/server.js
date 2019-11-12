@@ -65,7 +65,7 @@ router.get("/bus.pb", (req,res,next) => {
         console.log("Sent data.");
     });
 });
-app.use("/.netlify/functions",router);
+app.use("/.netlify/functions/server",router);
 
 module.exports.handler = serverless(app);
 
