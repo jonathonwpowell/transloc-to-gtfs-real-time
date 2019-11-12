@@ -63,7 +63,7 @@ router.get("/bus.pb", (req,res,next) => {
         //console.log(decodedMessage.entity);
         res.set("Content-Length",encodedMessage.length.toString());
         //res.set("Transfer-Encoding","chunked");
-        res.send(encodedMessage);
+        res.end(encodedMessage);
         //console.log("Sent data. Content Length " + encodedMessage.length);
     });
 });
