@@ -61,7 +61,9 @@ router.get("/bus.pb", (req,res,next) => {
         // console.log(feedMessage.entity[0]);
         // console.log("----------------------------------------")
         //console.log(decodedMessage.entity);
-        res.set("Content-Length",encodedMessage.length.toString());
+        //res.set("Content-Length",encodedMessage.length.toString());
+        res.set("Content-Type","application/x-protobuf");
+        
         //res.set("Transfer-Encoding","chunked");
         res.end(encodedMessage);
         //console.log("Sent data. Content Length " + encodedMessage.length);
