@@ -6,11 +6,12 @@
   "author": "Jonathon Powell",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "build": "netlify-lambda build express"
   },
   "dependencies": {
     "express": "^4.17.1",
     "gtfs-realtime-bindings": "^0.0.5",
+    "netlify-lambda": "^1.6.3",
     "serverless-http": "^2.3.0",
     "unirest": "^0.6.0"
   }
