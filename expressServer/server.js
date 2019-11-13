@@ -81,7 +81,7 @@ router.get("/vehiclepositions/:agencyId(\\d+)", (req,res,next) => {
         
         //res.set("Transfer-Encoding","chunked");
         res.end(encodedMessage);
-        console.log("Sent data for agency " + agencyId + " at " + new Date().toISOString());
+        console.log("Sent data of size " + encodedMessage.length + " for agency " + agencyId + " at " + new Date().toISOString());
     });
 });
 app.use("/.netlify/functions/server",router);
