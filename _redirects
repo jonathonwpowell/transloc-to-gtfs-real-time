@@ -1,3 +1,4 @@
 # Redirect home to github page
-/           https://github.com/jonathonwpowell/transloc-to-gtfs-real-time
-/api        /.netlify/functions/server
+/               https://github.com/jonathonwpowell/transloc-to-gtfs-real-time
+# Redirects all calls to api endpoint to function location
+/api/*          /.netlify/functions/server/:splat
