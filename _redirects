@@ -1,0 +1,3 @@
+# Redirect home to github page
+/           https://github.com/jonathonwpowell/transloc-to-gtfs-real-time
+/api        /.netlify/functions/server
