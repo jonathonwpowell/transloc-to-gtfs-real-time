@@ -131,16 +131,16 @@ router.get("/vehiclepositions/:agencyId(\\d+)", (req,res,next) => {
         });
 
         var encodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.encode(feedMessage).finish();
-        res.set("Content-Type","application/x-protobuf");
-        res.end(encodedMessage.toString());
+        res.set({"Content-Type":"application/x-protobuf"});
+        res.end(encodedMessage);
         // console.log(JSON.stringify(feedMessage));
         // console.log("----------------")
-        // console.log(JSON.stringify(GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(encodedMessage)))
+        //console.log(JSON.stringify(GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(encodedMessage)))
         console.log("Sent data of size " + encodedMessage.length + " for agency " + agencyId + " at " + new Date().toISOString());
     });
 });
 app.use("/.netlify/functions/server",router);
 
 module.exports = app;
-module.exports.handler = serverless(app, {binary: ['application/json', 'application/x-protobuf']});
+module.exports.handler = serverless(app, {binary: ['application/json', 'application/x-protobuf', 'application/octet-buffer']});
 
