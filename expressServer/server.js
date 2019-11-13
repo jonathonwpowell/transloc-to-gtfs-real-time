@@ -85,5 +85,5 @@ router.get("/vehiclepositions/:agencyId(\\d+)", (req,res,next) => {
 app.use("/.netlify/functions/server",router);
 
 module.exports = app;
-module.exports.handler = serverless(app);
+module.exports.handler = serverless(app, {binary: ['application/json', 'application/x-protobuf']});
 
