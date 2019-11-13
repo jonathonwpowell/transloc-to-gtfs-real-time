@@ -12,9 +12,7 @@ function createVehiclePos(busData) {
         "longitude": busData.location.lng
     })
 
-    var vehicleDesc = new GtfsRealtimeBindings.transit_realtime.VehicleDescriptor({
-        "id": busData.vehicle_id,
-    });
+    var vehicleDesc = createVehicleDescriptor(busData.vehicle_id)
 
     var vehiclePos = new GtfsRealtimeBindings.transit_realtime.VehiclePosition({
         position,
@@ -22,7 +20,13 @@ function createVehiclePos(busData) {
         vehicle: vehicleDesc,
     });
 
-    return vehiclePos;
+    return vehiclePos; 
+}
+
+function createVehicleDescriptor(id) {
+    return new GtfsRealtimeBindings.transit_realtime.VehicleDescriptor({
+        "id": id
+    });
 }
 
 function createFeedHeader(timestamp) {
@@ -35,14 +39,56 @@ function createFeedHeader(timestamp) {
     return feedHeader;
 }
 
+function createStopTimeUpdate(stopId, arrivalEstimate) {
+    return new GtfsRealtimeBindings.transit_realtime.TripUpdate.StopTimeUpdate({
+        "stopId": stopId,
+        "arrival": arrivalEstimate
+    });
+}
+
+function createStopTimeEvent(timestamp) {
+    var unixTime = timestampToUnix(timestamp);
+    return new GtfsRealtimeBindings.transit_realtime.TripUpdate.StopTimeEvent({
+        "time": unixTime
+    });
+}
+
+function createStopTimeUpdates(arrivalEstimates) {
+    var updates = [];
+    
+    arrivalEstimates.forEach(est => {
+        var unixTime = createStopTimeEvent(est.arrival_at);
+        updates.push(createStopTimeUpdate(est.stop_id, unixTime));
+    })
+
+    return updates
+}
+
+function createTripDescriptor(trip_id, route_id) {
+    return new GtfsRealtimeBindings.transit_realtime.TripDescriptor({
+        "tripId": trip_id,
+        "routeId": route_id
+    });
+}
+
+function createTripUpdate(busData) {
+    var stopTimeUpdates = createStopTimeUpdates(busData.arrival_estimates);
+
+    var tripUpdate = new GtfsRealtimeBindings.transit_realtime.TripUpdate({
+        "vehicle": createVehicleDescriptor(busData.vehicle_id),
+        "timestamp": timestampToUnix(busData.last_updated_on),
+        "stopTimeUpdate": stopTimeUpdates,
+        "trip": createTripDescriptor(null, busData.route_id)
+    });
+
+    return tripUpdate;
+}
+
+
+
 function timestampToUnix(timestamp) {
     return new Date(timestamp).getTime() / 1000;
 }
-
-router.get("/here", (a,b,c) => {
-    console.log("22");
-    b.end("a");
-})
 
 router.get("/vehiclepositions/:agencyId(\\d+)", (req,res,next) => {
     var agencyId = req.params.agencyId;
@@ -71,14 +117,25 @@ router.get("/vehiclepositions/:agencyId(\\d+)", (req,res,next) => {
         buses.forEach((bus) => {
 
             var vehiclePos = createVehiclePos(bus);
+            var tripUpdate = createTripUpdate(bus);
+            //console.log(JSON.stringify(tripUpdate));
+            //var a = GtfsRealtimeBindings.transit_realtime.TripUpdate.encode(tripUpdate);
+            //console.log(GtfsRealtimeBindings.transit_realtime.TripUpdate.decode(a));
 
-            var feedEntity = new GtfsRealtimeBindings.transit_realtime.FeedEntity({"vehicle": vehiclePos, "id": bus.vehicle_id});
+            var feedEntity = new GtfsRealtimeBindings.transit_realtime.FeedEntity({
+                "vehicle": vehiclePos, 
+                "id": bus.vehicle_id,
+                "tripUpdate": tripUpdate
+            });
             feedMessage.entity.push(feedEntity);
         });
 
         var encodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.encode(feedMessage).finish();
         res.set("Content-Type","application/x-protobuf");
-        res.end(encodedMessage);
+        res.end(encodedMessage.toString());
+        // console.log(JSON.stringify(feedMessage));
+        // console.log("----------------")
+        // console.log(JSON.stringify(GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(encodedMessage)))
         console.log("Sent data of size " + encodedMessage.length + " for agency " + agencyId + " at " + new Date().toISOString());
     });
 });
