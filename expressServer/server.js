@@ -78,7 +78,7 @@ router.get("/vehiclepositions/:agencyId(\\d+)", (req,res,next) => {
 
         var encodedMessage = GtfsRealtimeBindings.transit_realtime.FeedMessage.encode(feedMessage).finish();
         res.set("Content-Type","application/x-protobuf");
-        res.set("Content-Length","390");
+        res.set("Content-Length",encodedMessage.length);
         //res.set("Transfer-Encoding","chunked");
         res.end(encodedMessage);
         console.log("Sent data of size " + encodedMessage.length + " for agency " + agencyId + " at " + new Date().toISOString());
