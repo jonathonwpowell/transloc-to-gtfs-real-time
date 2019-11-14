@@ -34,7 +34,7 @@ function createVehicleDescriptor(id) {
 
 function createFeedHeader(timestamp) {
     var feedHeader = new GtfsRealtimeBindings.transit_realtime.FeedHeader({
-        "gtfs_realtime_version": "2.0",
+        "gtfsRealtimeVersion": "2.0",
         "incrementality": 0,
         "timestamp": timestampToUnix(timestamp)
     });
