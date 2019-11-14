@@ -6,12 +6,16 @@ var app = express();
 
 const router = express.Router();
 
+function mphToMetersPerSec(mph) {
+    return mph * .44704;
+}
+
 function createVehiclePos(busData) {
     var position = new GtfsRealtimeBindings.transit_realtime.Position({
         "latitude": busData.location.lat,
         "longitude": busData.location.lng,
         "bearing": busData.heading,
-        "speed": busData.speed,
+        "speed": mphToMetersPerSec(busData.speed),
     })
 
     var vehicleDesc = createVehicleDescriptor(busData.vehicle_id)
