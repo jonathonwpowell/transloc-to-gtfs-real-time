@@ -6,7 +6,7 @@
   "author": "Jonathon Powell",
   "license": "MIT",
   "scripts": {
-    "build": "netlify-lambda build expressServer",
+    "build": "netlify-lambda build src/expressServer",
     "start": "node src/server-local.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
