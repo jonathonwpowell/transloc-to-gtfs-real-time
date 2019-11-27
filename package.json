@@ -6,8 +6,11 @@
   "author": "Jonathon Powell",
   "license": "MIT",
   "scripts": {
-    "build": "netlify-lambda build expressServer",
-    "start": "node server-local.js"
+    "build": "netlify-lambda build src/expressServer",
+    "start": "node src/server-local.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -15,5 +18,15 @@
     "netlify-lambda": "^1.6.3",
     "serverless-http": "^2.3.0",
     "unirest": "^0.6.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.9",
+    "eslint": "^6.7.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^24.9.0"
   }
 }
