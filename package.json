@@ -8,8 +8,7 @@
   "scripts": {
     "build": "netlify-lambda build expressServer",
     "start": "node src/server-local.js",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --coverage",
     "test:watch": "jest --watch"
   },
   "dependencies": {
