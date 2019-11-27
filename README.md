@@ -1,7 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1e85c3f6-1242-4394-acf2-10a9f606b180/deploy-status)](https://app.netlify.com/sites/nervous-wing-1097db/deploys)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Dependency Status](https://david-dm.org/jonathonwpowell/transloc-to-gtfs-real-time.svg)](https://david-dm.org/jonathonwpowell/transloc-to-gtfs-real-time)
-
+[![dependencies Status](https://david-dm.org/jonathonwpowell/transloc-to-gtfs-real-time/status.svg)](https://david-dm.org/jonathonwpowell/transloc-to-gtfs-real-time)
 
 # transloc-to-gtfs-real-time
 The goal of this project is to create a method of converting the proprietary Transloc API to gtfs realtime.
