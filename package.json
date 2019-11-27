@@ -9,7 +9,8 @@
     "build": "netlify-lambda build src/expressServer",
     "start": "node src/server-local.js",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -19,6 +20,7 @@
     "unirest": "^0.6.0"
   },
   "devDependencies": {
+    "coveralls": "^3.0.9",
     "eslint": "^6.7.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
