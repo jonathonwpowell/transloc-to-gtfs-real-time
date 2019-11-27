@@ -1,9 +1,10 @@
-var unirest = require('unirest')
-var GtfsRealtimeBindings = require('gtfs-realtime-bindings')
-var express = require('express')
+const unirest = require('unirest')
+const GtfsRealtimeBindings = require('gtfs-realtime-bindings')
+const express = require('express')
 const serverless = require('serverless-http')
 const gtfsUtils = require('../utilities/gtfsBindingsBuilders')
-var app = express()
+const constants = require('../utilities/constants')
+const app = express()
 
 const router = express.Router()
 
@@ -13,7 +14,7 @@ router.get('/tripupdates/:agencyId(\\d+)', (req, res, next) => {
     throw new Error('Agency ID must be defined')
   }
 
-  var busCall = unirest('GET', 'https://transloc-api-1-2.p.rapidapi.com/vehicles.json')
+  var busCall = unirest('GET', constants.translocVehicleEndpoint)
 
   busCall.query({
     callback: 'call',
@@ -21,8 +22,8 @@ router.get('/tripupdates/:agencyId(\\d+)', (req, res, next) => {
   })
 
   busCall.headers({
-    'x-rapidapi-host': 'transloc-api-1-2.p.rapidapi.com',
-    'x-rapidapi-key': 'IcmLKZZ5zEmshFRGhk5AZLEqKIN8p1EhU12jsnox1jlqBKWleK'
+    'x-rapidapi-host': constants.translocAPIHost,
+    'x-rapidapi-key': constants.defaultTranslocAPIKey
   })
 
   busCall.end(function (busRes) {
@@ -67,7 +68,7 @@ router.get('/vehiclepositions/:agencyId(\\d+)', (req, res, next) => {
     throw new Error('Agency ID must be defined')
   }
 
-  var busCall = unirest('GET', 'https://transloc-api-1-2.p.rapidapi.com/vehicles.json')
+  var busCall = unirest('GET', constants.translocVehicleEndpoint)
 
   busCall.query({
     callback: 'call',
@@ -75,8 +76,8 @@ router.get('/vehiclepositions/:agencyId(\\d+)', (req, res, next) => {
   })
 
   busCall.headers({
-    'x-rapidapi-host': 'transloc-api-1-2.p.rapidapi.com',
-    'x-rapidapi-key': 'IcmLKZZ5zEmshFRGhk5AZLEqKIN8p1EhU12jsnox1jlqBKWleK'
+    'x-rapidapi-host': constants.translocAPIHost,
+    'x-rapidapi-key': constants.defaultTranslocAPIKey
   })
 
   busCall.end(function (busRes) {
