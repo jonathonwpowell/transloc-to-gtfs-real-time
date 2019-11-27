@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1e85c3f6-1242-4394-acf2-10a9f606b180/deploy-status)](https://app.netlify.com/sites/nervous-wing-1097db/deploys)
+
 # transloc-to-gtfs-real-time
 The goal of this project is to create a method of converting the proprietary Transloc API to gtfs realtime.
 This will allow for the data to be in a standardized format, to be used for ingestion by other programs such as google maps.
