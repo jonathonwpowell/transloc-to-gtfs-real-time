@@ -15,6 +15,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "gtfs-realtime-bindings": "^0.0.5",
+    "lodash": "^4.17.15",
     "netlify-lambda": "^1.6.3",
     "serverless-http": "^2.3.0",
     "unirest": "^0.6.0"

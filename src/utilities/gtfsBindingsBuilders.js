@@ -28,10 +28,14 @@ function createVehicleDescriptor (id) {
 }
 
 function createFeedHeader (timestamp) {
+  if (!timestamp) {
+    console.log('WARNING: No timestamp provided while creating feed header. Using the current time instead')
+  }
+
   var feedHeader = new GtfsRealtimeBindings.transit_realtime.FeedHeader({
     gtfsRealtimeVersion: '2.0',
     incrementality: 0,
-    timestamp: conversions.timestampToUnix(timestamp)
+    timestamp: conversions.timestampToUnix(timestamp || new Date().toUTCString())
   })
 
   return feedHeader
