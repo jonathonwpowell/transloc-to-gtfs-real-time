@@ -25,11 +25,12 @@ The program currently has two endpoints:
  `/tripupdates/<agencyId>`, this can be tested at https://nervous-wing-1097db.netlify.com/.netlify/functions/server/tripupdates/20 (or with any other agency ID)
  
  # Current Limitations
- Currently the transloc API does not provide a means to map a vehicle to a specific trip, such as a trip_id or start time / end time.  Without this data it is impossible to know for sure when a vehicle is supposed to arrive at a specific stop.  It also inhibits the use of this data for ingestion into Google Maps
+ Currently the transloc API does not provide a means to map a vehicle to a specific trip, such as a trip_id or start time / end time.  Without this data it is impossible to know for sure when a vehicle is supposed to arrive at a specific stop.  It also inhibits the use of this data for ingestion into Google Maps, as Google Maps seems to require trip_id to show any realtime data.
  
  # Helpful Tools
  Here is a list of helpful tools I have used along the way:
   - [Awesome-Transit](https://project-awesome.org/CUTR-at-USF/awesome-transit#gtfs-realtime-convertors): A list of great tools for transit data, I got most of the tools I used from there
   - [OneBusAway Realtime Visualizer](https://github.com/OneBusAway/onebusaway-gtfs-realtime-visualizer/wiki): Used to sanity check output
   - [GTFS Realtime Reference](https://developers.google.com/transit/gtfs-realtime/reference): Reference for the GTFS Realtime format
-  - [GTFS Realtime Validator](https://github.com/CUTR-at-USF/gtfs-realtime-validator): USed to validate the GTFS REaltime feed being generated
+  - [GTFS Realtime Validator](https://github.com/CUTR-at-USF/gtfs-realtime-validator): Used to validate the GTFS REaltime feed being generated
+  - [Transloc API](https://rapidapi.com/transloc/api/openapi-1-2): API that provides vehicle data, including realtime vehicle locations
