@@ -27,6 +27,8 @@ The program currently has two endpoints:
  # Current Limitations
  Currently the transloc API does not provide a means to map a vehicle to a specific trip, such as a trip_id or start time / end time.  Without this data it is impossible to know for sure when a vehicle is supposed to arrive at a specific stop.  It also inhibits the use of this data for ingestion into Google Maps, as Google Maps seems to require trip_id to show any realtime data.
  
+ Currently my API key for Transloc is located in src > utilities > constants.js.  Feel free to use it for testing, but I would recommend not using it if you plan on running large volumes of requests.
+ 
  # Helpful Tools
  Here is a list of helpful tools I have used along the way:
   - [Awesome-Transit](https://project-awesome.org/CUTR-at-USF/awesome-transit#gtfs-realtime-convertors): A list of great tools for transit data, I got most of the tools I used from there
